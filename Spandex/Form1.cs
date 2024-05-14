@@ -119,7 +119,7 @@ namespace Spandex
                 }
 
                 UseWaitCursor = false;
-                this.Text = $"{materials[0].assetfile} - Spandex v{ Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
+                this.Text = $"{materials[0].assetfile} - Spandex v{Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
             }
 
             stringGrid.DataSource = textures.Values.
@@ -129,7 +129,7 @@ namespace Spandex
 
             valueGrid.DataSource = values.Values.
                 SelectMany(v => v).
-                OrderBy(v => v.Type == GridEntry.TypeOrder.Integer ? 1 : 0 ).
+                OrderBy(v => v.Type == GridEntry.TypeOrder.Integer ? 1 : 0).
                 ThenBy(v => v.ID).
                 ToList();
             valueGrid.AutoResizeColumns();
@@ -227,7 +227,7 @@ namespace Spandex
                         if (varray[j] == null)
                         {
                             varray[j] = new GridEntry();
-                            varray[j].Span = vs.Count > 1 ?  j / (float)(vs.Count - 1) : null;
+                            varray[j].Span = vs.Count > 1 ? j / (float)(vs.Count - 1) : null;
                             varray[j].ID = (uint)s.Key;
                         }
 
@@ -353,7 +353,7 @@ namespace Spandex
                 var datastrings = new List<string>();
                 var material8 = material.GetSection<Material.ShaderOverrides>();
                 var m8idx = 0;
-                Material.SectionHeader dataseg = tl == null ? (material.segments.Length > 0 ? material.segments[0] : null ) : material.sectionlayout.GetSectionByOffset(((Material.ShaderTextures.ShaderTextureEntry)tl.entries[0]).nameoffset);
+                Material.SectionHeader dataseg = tl == null ? (material.segments.Length > 0 ? material.segments[0] : null) : material.sectionlayout.GetSectionByOffset(((Material.ShaderTextures.ShaderTextureEntry)tl.entries[0]).nameoffset);
 
                 if (textures.ContainsKey(0))
                     datastrings.Add((string?)textures[0].values[GridEntry.SLOTOVERRIDE].Value ?? String.Empty);
@@ -567,22 +567,32 @@ namespace Spandex
                 {
                     case GridEntry.TypeOrder.Float:
                         float ftest;
-                        cell.Value = float.TryParse((string)cell.Value, out ftest) ? ftest : null; 
+                        cell.Value = float.TryParse((string)cell.Value, out ftest) ? ftest : null;
                         break;
                     case GridEntry.TypeOrder.Short:
                         ushort utest;
-                        cell.Value = ushort.TryParse((string)cell.Value, out utest) ? utest : null; 
+                        cell.Value = ushort.TryParse((string)cell.Value, out utest) ? utest : null;
                         break;
                     case GridEntry.TypeOrder.Byte:
                         byte btest;
-                        cell.Value = byte.TryParse((string)cell.Value, out btest) ? btest : null; 
+                        cell.Value = byte.TryParse((string)cell.Value, out btest) ? btest : null;
                         break;
                     case GridEntry.TypeOrder.Integer:
                         uint ui32test;
-                        cell.Value = uint.TryParse((string)cell.Value, out ui32test) ? ui32test : null; 
+                        cell.Value = uint.TryParse((string)cell.Value, out ui32test) ? ui32test : null;
                         break;
                 }
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void stringGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 
@@ -616,7 +626,7 @@ namespace Spandex
 
         public GridEntry()
         {
-            values = new Values[3] { new Values(), new Values(), new Values()};
+            values = new Values[3] { new Values(), new Values(), new Values() };
         }
 
         public enum TypeOrder : uint
