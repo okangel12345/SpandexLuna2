@@ -387,8 +387,8 @@ namespace Spandex
         Fresnel_Strength_Sunset = 0xADD6DFA8,
         Fresnel_Strength_Night = 0xB2E66D19,
         Subsurface_Scattering = 0x19D025E4,
-        Array_Tiling = CF1098A0,
-        Array_Strength = 0F2D67E4,
+        Array_Tiling = 0xCF1098A0,
+        Array_Strength = 0x0F2D67E4,
 
         // suggested
         TextureTiling = 0x85773B3C,
