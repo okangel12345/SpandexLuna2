@@ -1,4 +1,5 @@
 using Spiderman;
+using System.Buffers.Binary;
 using System.Collections;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -18,6 +19,8 @@ namespace Spandex
         {
             InitializeComponent();
             materials = new Material[2];
+            comboBox1.Items.Add("Marvel's Spider-Man Remastered");
+            comboBox1.Items.Add("Marvel's Spider-Man: Miles Morales");
 
             textures = new Dictionary<uint, GridEntry>();
             stringGrid.DataSource = textures.Values.ToList();
@@ -70,13 +73,15 @@ namespace Spandex
             Open();
         }
 
+        private byte[] originalBinary;
+
         private void Open(string filename = "")
         {
             this.Text = $"Spandex v{Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
             textures = new Dictionary<uint, GridEntry>();
             values = new Dictionary<uint, GridEntry[]>();
             statusLabel.Image = null;
-            statusLabel.Text = "Open an material file";
+            statusLabel.Text = "Open a material file";
             savebutton.Enabled = false;
 
             var f = new OpenFileDialog();
@@ -94,6 +99,23 @@ namespace Spandex
                 lastsavefile = Path.ChangeExtension(Path.GetFileName(f.FileName), $".modified{Path.GetExtension(f.FileName)}");
 
                 ProcessFile(f.FileName, 0);
+                originalBinary = File.ReadAllBytes(f.FileName);
+
+                // Detect magic number and set ComboBox selection
+                bool isMaterialGraph = Path.GetExtension(f.FileName).Equals(".materialgraph", StringComparison.OrdinalIgnoreCase);
+
+                    if (isMaterialGraph)
+                {
+                    byte[] magicNumber = new byte[4];
+                    Array.Copy(originalBinary, 0, magicNumber, 0, 4);
+                    SetComboBoxSelection(magicNumber);
+                }
+                else
+                {
+                    byte[] magicNumber = new byte[4];
+                    Array.Copy(originalBinary, 0, magicNumber, 0, 4);
+                    SetComboBoxSelection(magicNumber);
+                }
 
                 savebutton.Enabled = true;
 
@@ -133,6 +155,14 @@ namespace Spandex
                 ThenBy(v => v.ID).
                 ToList();
             valueGrid.AutoResizeColumns();
+        }
+
+        private byte[] ReplaceBytesAtOffset(byte[] data, int offset, byte[] newBytes)
+        {
+            byte[] result = new byte[data.Length];
+            Array.Copy(data, result, data.Length);
+            Array.Copy(newBytes, 0, result, offset, newBytes.Length);
+            return result;
         }
 
         private void ProcessFile(string filename, int entry)
@@ -313,6 +343,72 @@ namespace Spandex
             }
         }
 
+        private byte[] GetMagicNumber(string filename)
+        {
+            byte[] magicNumber;
+            bool isMaterialGraph = Path.GetExtension(filename).Equals(".materialgraph", StringComparison.OrdinalIgnoreCase);
+
+            if (isMaterialGraph)
+            {
+                // Values for .materialgraph files
+                switch (comboBox1.SelectedIndex)
+                {
+                    case 0:
+                        // Replace the first 4 bytes with the magic number for Marvel's Spider-Man Remastered (materialgraph)
+                        magicNumber = new byte[] { 0xE3, 0x03, 0xD7, 0x07 }; // Example values
+                        break;
+                    case 1:
+                        // Replace the first 4 bytes with the magic number for Marvel's Spider-Man: Miles Morales (materialgraph)
+                        magicNumber = new byte[] { 0x2A, 0x34, 0x60, 0xFF }; // Example values
+                        break;
+                    default:
+                        throw new InvalidOperationException("Invalid option selected in ComboBox1");
+                }
+            }
+            else
+            {
+                // Values for .material files
+                switch (comboBox1.SelectedIndex)
+                {
+                    case 0:
+                        // Replace the first 4 bytes with the magic number for Marvel's Spider-Man Remastered (material)
+                        magicNumber = new byte[] { 0x8C, 0xEF, 0x04, 0x1C };
+                        break;
+                    case 1:
+                        // Replace the first 4 bytes with the magic number for Marvel's Spider-Man: Miles Morales (material)
+                        magicNumber = new byte[] { 0x9C, 0x7E, 0x75, 0x18 };
+                        break;
+                    default:
+                        throw new InvalidOperationException("Invalid option selected in ComboBox1");
+                }
+            }
+            return magicNumber;
+        }
+
+        private void SetComboBoxSelection(byte[] magicNumber)
+        {
+            if (magicNumber.SequenceEqual(new byte[] { 0x8C, 0xEF, 0x04, 0x1C }))
+            {
+                comboBox1.SelectedIndex = 0; // Marvel's Spider-Man Remastered
+            }
+            else if (magicNumber.SequenceEqual(new byte[] { 0x9C, 0x7E, 0x75, 0x18 }))
+            {
+                comboBox1.SelectedIndex = 1; // Marvel's Spider-Man: Miles Morales
+            }
+            else if (magicNumber.SequenceEqual(new byte[] { 0xE3, 0x03, 0xDC, 0x07 }))
+            {
+                comboBox1.SelectedIndex = 0; // Marvel's Spider-Man Remastered
+            }
+            else if (magicNumber.SequenceEqual(new byte[] { 0x2A, 0x34, 0x60, 0xFF }))
+            {
+                comboBox1.SelectedIndex = 1; // Marvel's Spider-Man: Miles Morales
+            }
+            else
+            {
+                comboBox1.SelectedIndex = -1; // Unknown magic number
+            }
+        }
+
         private void savebutton_Click(object sender, EventArgs e)
         {
             var material = materials[0];
@@ -466,11 +562,56 @@ namespace Spandex
                     shaderfloats.WriteValues(material.GetSection<Material.ShaderFloatValues>()?.newdata);
 
                 material.ToBytes();
+
+                // Replace the first 4 bytes with the magic number based on the selection in the comboBox1
+                byte[] magicNumber = GetMagicNumber(f.FileName);
+                Array.Copy(magicNumber, 0, material.binary, 0, magicNumber.Length);
+                Array.Copy(magicNumber, 0, material.binary, 40, magicNumber.Length);
+
                 material.Save(lastsavefile);
                 statusLabel.Image = global::Spandex.Properties.Resources.ok;
                 statusLabel.Text = $"Saved material: {lastsavefile}";
                 UseWaitCursor = false;
+               
             }
+        }
+
+        private void folderButton_Click(object sender, EventArgs e)
+        {
+            using (var folderDialog = new FolderBrowserDialog())
+            {
+                if (folderDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string selectedPath = folderDialog.SelectedPath;
+                    ReplaceMagicNumberInMaterials(selectedPath);
+                }
+            }
+        }
+
+        private void ReplaceMagicNumberInMaterials(string folderPath)
+        {
+            // Get all .material and .materialgraph files in the selected folder
+            string[] materialFiles = Directory.GetFiles(folderPath, "*.material", SearchOption.AllDirectories)
+                                              .Concat(Directory.GetFiles(folderPath, "*.materialgraph", SearchOption.AllDirectories))
+                                              .ToArray();
+
+            foreach (var file in materialFiles)
+            {
+                // Read the file into a byte array
+                byte[] fileBytes = File.ReadAllBytes(file);
+
+                // Get the magic number based on the file extension and ComboBox selection
+                byte[] magicNumber = GetMagicNumber(file);
+
+                // Replace the first 4 bytes with the magic number
+                Array.Copy(magicNumber, 0, fileBytes, 0, magicNumber.Length);
+                Array.Copy(magicNumber, 0, fileBytes, 40, magicNumber.Length);
+
+                // Save the modified file
+                File.WriteAllBytes(file, fileBytes);
+            }
+
+            MessageBox.Show($"Processed {materialFiles.Length} files.", "Operation Completed", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void stringGrid_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -594,6 +735,12 @@ namespace Spandex
         {
 
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 
     public class GridEntry

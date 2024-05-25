@@ -33,15 +33,6 @@
             DataGridViewCellStyle dataGridViewCellStyle13 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle14 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle15 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
@@ -53,10 +44,30 @@
             DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle16 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle22 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle23 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle24 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle17 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle18 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle19 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle20 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle21 = new DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             openbutton = new Button();
             savebutton = new Button();
             stringGrid = new DataGridView();
+            IDdisplay = new DataGridViewTextBoxColumn();
+            InternalValue = new DataGridViewTextBoxColumn();
+            Value = new DataGridViewTextBoxColumn();
+            TemplateValue = new DataGridViewTextBoxColumn();
+            spanDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            iDDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            iDdisplayDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            typeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            valueDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            internalValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            templateValueDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             stringGridEntryBindingSource = new BindingSource(components);
             bindingSource2 = new BindingSource(components);
             valueGrid = new DataGridView();
@@ -70,6 +81,8 @@
             panel2 = new Panel();
             label2 = new Label();
             panel1 = new Panel();
+            button1 = new Button();
+            comboBox1 = new ComboBox();
             removeUndefInts = new CheckBox();
             removeUndefFloats = new CheckBox();
             removeUndefTextures = new CheckBox();
@@ -78,17 +91,6 @@
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             statusLabel = new ToolStripStatusLabel();
-            IDdisplay = new DataGridViewTextBoxColumn();
-            InternalValue = new DataGridViewTextBoxColumn();
-            Value = new DataGridViewTextBoxColumn();
-            TemplateValue = new DataGridViewTextBoxColumn();
-            spanDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            iDDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            iDdisplayDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            typeDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            valueDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            internalValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            templateValueDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)stringGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)stringGridEntryBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource2).BeginInit();
@@ -189,6 +191,126 @@
             stringGrid.CellContentClick += stringGrid_CellContentClick;
             stringGrid.CellValueChanged += stringGrid_CellValueChanged;
             stringGrid.DataBindingComplete += stringGrid_DataBindingComplete;
+            // 
+            // IDdisplay
+            // 
+            IDdisplay.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            IDdisplay.DataPropertyName = "IDdisplay";
+            dataGridViewCellStyle2.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle2.ForeColor = Color.White;
+            IDdisplay.DefaultCellStyle = dataGridViewCellStyle2;
+            IDdisplay.HeaderText = "ID";
+            IDdisplay.MinimumWidth = 9;
+            IDdisplay.Name = "IDdisplay";
+            IDdisplay.ReadOnly = true;
+            IDdisplay.Width = 42;
+            // 
+            // InternalValue
+            // 
+            InternalValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            InternalValue.DataPropertyName = "InternalValue";
+            dataGridViewCellStyle3.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle3.ForeColor = Color.White;
+            InternalValue.DefaultCellStyle = dataGridViewCellStyle3;
+            InternalValue.HeaderText = "Internal Shader";
+            InternalValue.MinimumWidth = 9;
+            InternalValue.Name = "InternalValue";
+            InternalValue.Width = 101;
+            // 
+            // Value
+            // 
+            Value.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            Value.DataPropertyName = "Value";
+            dataGridViewCellStyle4.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle4.ForeColor = Color.White;
+            Value.DefaultCellStyle = dataGridViewCellStyle4;
+            Value.HeaderText = "External Template Overrides";
+            Value.MinimumWidth = 9;
+            Value.Name = "Value";
+            Value.Width = 161;
+            // 
+            // TemplateValue
+            // 
+            TemplateValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            TemplateValue.DataPropertyName = "TemplateValue";
+            dataGridViewCellStyle5.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle5.ForeColor = Color.RosyBrown;
+            TemplateValue.DefaultCellStyle = dataGridViewCellStyle5;
+            TemplateValue.HeaderText = "External Template Defaults";
+            TemplateValue.MinimumWidth = 9;
+            TemplateValue.Name = "TemplateValue";
+            TemplateValue.ReadOnly = true;
+            TemplateValue.Width = 155;
+            // 
+            // spanDataGridViewTextBoxColumn
+            // 
+            spanDataGridViewTextBoxColumn.DataPropertyName = "Span";
+            dataGridViewCellStyle6.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle6.ForeColor = Color.White;
+            spanDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
+            spanDataGridViewTextBoxColumn.HeaderText = "Span";
+            spanDataGridViewTextBoxColumn.Name = "spanDataGridViewTextBoxColumn";
+            spanDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // iDDataGridViewTextBoxColumn
+            // 
+            iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
+            dataGridViewCellStyle7.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle7.ForeColor = Color.White;
+            iDDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
+            iDDataGridViewTextBoxColumn.HeaderText = "ID";
+            iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
+            iDDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // iDdisplayDataGridViewTextBoxColumn1
+            // 
+            iDdisplayDataGridViewTextBoxColumn1.DataPropertyName = "IDdisplay";
+            dataGridViewCellStyle8.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle8.ForeColor = Color.White;
+            iDdisplayDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle8;
+            iDdisplayDataGridViewTextBoxColumn1.HeaderText = "IDdisplay";
+            iDdisplayDataGridViewTextBoxColumn1.Name = "iDdisplayDataGridViewTextBoxColumn1";
+            iDdisplayDataGridViewTextBoxColumn1.Visible = false;
+            // 
+            // typeDataGridViewTextBoxColumn
+            // 
+            typeDataGridViewTextBoxColumn.DataPropertyName = "Type";
+            dataGridViewCellStyle9.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle9.ForeColor = Color.White;
+            typeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle9;
+            typeDataGridViewTextBoxColumn.HeaderText = "Type";
+            typeDataGridViewTextBoxColumn.Name = "typeDataGridViewTextBoxColumn";
+            typeDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // valueDataGridViewTextBoxColumn1
+            // 
+            valueDataGridViewTextBoxColumn1.DataPropertyName = "Value";
+            dataGridViewCellStyle10.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle10.ForeColor = Color.White;
+            valueDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle10;
+            valueDataGridViewTextBoxColumn1.HeaderText = "Value";
+            valueDataGridViewTextBoxColumn1.Name = "valueDataGridViewTextBoxColumn1";
+            valueDataGridViewTextBoxColumn1.Visible = false;
+            // 
+            // internalValueDataGridViewTextBoxColumn
+            // 
+            internalValueDataGridViewTextBoxColumn.DataPropertyName = "InternalValue";
+            dataGridViewCellStyle11.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle11.ForeColor = Color.White;
+            internalValueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle11;
+            internalValueDataGridViewTextBoxColumn.HeaderText = "InternalValue";
+            internalValueDataGridViewTextBoxColumn.Name = "internalValueDataGridViewTextBoxColumn";
+            internalValueDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // templateValueDataGridViewTextBoxColumn1
+            // 
+            templateValueDataGridViewTextBoxColumn1.DataPropertyName = "TemplateValue";
+            dataGridViewCellStyle12.BackColor = Color.FromArgb(21, 21, 21);
+            dataGridViewCellStyle12.ForeColor = Color.White;
+            templateValueDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle12;
+            templateValueDataGridViewTextBoxColumn1.HeaderText = "TemplateValue";
+            templateValueDataGridViewTextBoxColumn1.Name = "templateValueDataGridViewTextBoxColumn1";
+            templateValueDataGridViewTextBoxColumn1.Visible = false;
             // 
             // stringGridEntryBindingSource
             // 
@@ -366,6 +488,8 @@
             // 
             panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel1.Controls.Add(button1);
+            panel1.Controls.Add(comboBox1);
             panel1.Controls.Add(removeUndefInts);
             panel1.Controls.Add(removeUndefFloats);
             panel1.Controls.Add(removeUndefTextures);
@@ -377,6 +501,31 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(284, 261);
             panel1.TabIndex = 4;
+            // 
+            // button1
+            // 
+            button1.AccessibleName = "folderButton";
+            button1.BackColor = Color.FromArgb(64, 64, 64);
+            button1.FlatAppearance.BorderColor = Color.Black;
+            button1.FlatStyle = FlatStyle.Flat;
+            button1.Location = new Point(60, 212);
+            button1.Name = "button1";
+            button1.Size = new Size(160, 23);
+            button1.TabIndex = 5;
+            button1.Text = "Batch Convert to Game";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += folderButton_Click;
+            // 
+            // comboBox1
+            // 
+            comboBox1.BackColor = Color.FromArgb(26, 26, 26);
+            comboBox1.ForeColor = SystemColors.Window;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Location = new Point(10, 158);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(257, 23);
+            comboBox1.TabIndex = 4;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // removeUndefInts
             // 
@@ -463,126 +612,6 @@
             statusLabel.Padding = new Padding(10, 0, 0, 0);
             statusLabel.Size = new Size(38, 28);
             // 
-            // IDdisplay
-            // 
-            IDdisplay.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            IDdisplay.DataPropertyName = "IDdisplay";
-            dataGridViewCellStyle2.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle2.ForeColor = Color.White;
-            IDdisplay.DefaultCellStyle = dataGridViewCellStyle2;
-            IDdisplay.HeaderText = "ID";
-            IDdisplay.MinimumWidth = 9;
-            IDdisplay.Name = "IDdisplay";
-            IDdisplay.ReadOnly = true;
-            IDdisplay.Width = 42;
-            // 
-            // InternalValue
-            // 
-            InternalValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            InternalValue.DataPropertyName = "InternalValue";
-            dataGridViewCellStyle3.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle3.ForeColor = Color.White;
-            InternalValue.DefaultCellStyle = dataGridViewCellStyle3;
-            InternalValue.HeaderText = "Internal Shader";
-            InternalValue.MinimumWidth = 9;
-            InternalValue.Name = "InternalValue";
-            InternalValue.Width = 110;
-            // 
-            // Value
-            // 
-            Value.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            Value.DataPropertyName = "Value";
-            dataGridViewCellStyle4.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle4.ForeColor = Color.White;
-            Value.DefaultCellStyle = dataGridViewCellStyle4;
-            Value.HeaderText = "External Template Overrides";
-            Value.MinimumWidth = 9;
-            Value.Name = "Value";
-            Value.Width = 161;
-            // 
-            // TemplateValue
-            // 
-            TemplateValue.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            TemplateValue.DataPropertyName = "TemplateValue";
-            dataGridViewCellStyle5.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle5.ForeColor = Color.RosyBrown;
-            TemplateValue.DefaultCellStyle = dataGridViewCellStyle5;
-            TemplateValue.HeaderText = "External Template Defaults";
-            TemplateValue.MinimumWidth = 9;
-            TemplateValue.Name = "TemplateValue";
-            TemplateValue.ReadOnly = true;
-            TemplateValue.Width = 155;
-            // 
-            // spanDataGridViewTextBoxColumn
-            // 
-            spanDataGridViewTextBoxColumn.DataPropertyName = "Span";
-            dataGridViewCellStyle6.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle6.ForeColor = Color.White;
-            spanDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle6;
-            spanDataGridViewTextBoxColumn.HeaderText = "Span";
-            spanDataGridViewTextBoxColumn.Name = "spanDataGridViewTextBoxColumn";
-            spanDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // iDDataGridViewTextBoxColumn
-            // 
-            iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
-            dataGridViewCellStyle7.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle7.ForeColor = Color.White;
-            iDDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle7;
-            iDDataGridViewTextBoxColumn.HeaderText = "ID";
-            iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
-            iDDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // iDdisplayDataGridViewTextBoxColumn1
-            // 
-            iDdisplayDataGridViewTextBoxColumn1.DataPropertyName = "IDdisplay";
-            dataGridViewCellStyle8.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle8.ForeColor = Color.White;
-            iDdisplayDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle8;
-            iDdisplayDataGridViewTextBoxColumn1.HeaderText = "IDdisplay";
-            iDdisplayDataGridViewTextBoxColumn1.Name = "iDdisplayDataGridViewTextBoxColumn1";
-            iDdisplayDataGridViewTextBoxColumn1.Visible = false;
-            // 
-            // typeDataGridViewTextBoxColumn
-            // 
-            typeDataGridViewTextBoxColumn.DataPropertyName = "Type";
-            dataGridViewCellStyle9.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle9.ForeColor = Color.White;
-            typeDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle9;
-            typeDataGridViewTextBoxColumn.HeaderText = "Type";
-            typeDataGridViewTextBoxColumn.Name = "typeDataGridViewTextBoxColumn";
-            typeDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // valueDataGridViewTextBoxColumn1
-            // 
-            valueDataGridViewTextBoxColumn1.DataPropertyName = "Value";
-            dataGridViewCellStyle10.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle10.ForeColor = Color.White;
-            valueDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle10;
-            valueDataGridViewTextBoxColumn1.HeaderText = "Value";
-            valueDataGridViewTextBoxColumn1.Name = "valueDataGridViewTextBoxColumn1";
-            valueDataGridViewTextBoxColumn1.Visible = false;
-            // 
-            // internalValueDataGridViewTextBoxColumn
-            // 
-            internalValueDataGridViewTextBoxColumn.DataPropertyName = "InternalValue";
-            dataGridViewCellStyle11.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle11.ForeColor = Color.White;
-            internalValueDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle11;
-            internalValueDataGridViewTextBoxColumn.HeaderText = "InternalValue";
-            internalValueDataGridViewTextBoxColumn.Name = "internalValueDataGridViewTextBoxColumn";
-            internalValueDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // templateValueDataGridViewTextBoxColumn1
-            // 
-            templateValueDataGridViewTextBoxColumn1.DataPropertyName = "TemplateValue";
-            dataGridViewCellStyle12.BackColor = Color.FromArgb(21, 21, 21);
-            dataGridViewCellStyle12.ForeColor = Color.White;
-            templateValueDataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle12;
-            templateValueDataGridViewTextBoxColumn1.HeaderText = "TemplateValue";
-            templateValueDataGridViewTextBoxColumn1.Name = "templateValueDataGridViewTextBoxColumn1";
-            templateValueDataGridViewTextBoxColumn1.Visible = false;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -659,5 +688,7 @@
         private DataGridViewTextBoxColumn valueDataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn internalValueDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn templateValueDataGridViewTextBoxColumn1;
+        private ComboBox comboBox1;
+        private Button button1;
     }
 }
