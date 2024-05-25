@@ -12,6 +12,7 @@ Updated with new IDs, batch game conversion, and dark mode.
 2. Press the 'Batch Convert to Game' button and select the folder where all your materials and materialgraphs are.
 3. Your materials should be converted now to whichever game you selected.
 
+
 **Why is my model white?**
 
 Make sure that if you are using a materialgraph from one game, you change the path to the correct location in the other game.
@@ -22,6 +23,7 @@ Spider-Man Remastered Materialgraph path: materialtemplates\legacy\legacy_hero_s
 
 
 Same path but for Miles Morales: required\materials\hero_spiderman_detail_windy.materialgraph
+
 
 **Why is my model still white?**
 
