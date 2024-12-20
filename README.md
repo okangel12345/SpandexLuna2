@@ -18,6 +18,14 @@ Updated with new IDs, support for all materials (RCRA, MSMR, MSMM & MSM2), enhan
 - Split container for string and numeric inputs.
 - Over 14,000 of Spider-Man's IDs.
 
+# Usage
+Click "Load File" to start loading the file. If everything goes through correctly you should see the material's numeric and string inputs on the top and bottom panels.
+You can resize these panels by positioning your cursor very slightly above the bottom panel.
+
+### Options
+- Autocomplete fields = When editing an external template override string, it'll open a search box that'll let you select any texture in hashes.txt.
+- Universal header = This is an option for MSM2 files to replace the header with an universally compatible one.
+
 # FAQ
 
 ## Why is Spandex Luna showing errors when loading certain materials?
