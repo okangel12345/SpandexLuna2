@@ -1,5 +1,12 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Spandex
 {
@@ -17,29 +24,42 @@ namespace Spandex
             searchBox.Text = current;
 
             resultlist.DataSource = displayed;
-            backgroundWorker1.WorkerSupportsCancellation = true;
+            backgroundWorker1.WorkerSupportsCancellation = false;
+
+            Styling.LunaToolboxStyle(this, Handle);
         }
 
         private void searchBox_TextChanged(object sender, EventArgs e)
         {
             if (backgroundWorker1.IsBusy)
+            {
                 backgroundWorker1.CancelAsync();
+            }
             else
+            {
                 backgroundWorker1.RunWorkerAsync();
+            }
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
             lastneedle = searchBox.Text;
             BackgroundWorker worker = (BackgroundWorker)sender;
-            displayed = valuepool.Where(s => !worker.CancellationPending && s.Contains(lastneedle, StringComparison.OrdinalIgnoreCase)).
-                Where(s => !worker.CancellationPending).Take(1000).ToList();
+
+            // Split the search term into individual keywords, removing any extra spaces
+            var keywords = lastneedle.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            // Search for items that contain all of the keywords
+            displayed = valuepool.Where(s => !worker.CancellationPending &&
+                                              keywords.All(keyword => s.Contains(keyword, StringComparison.OrdinalIgnoreCase)))
+                                 .Take(1000)
+                                 .ToList();
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (lastneedle != searchBox.Text)
-                // start again if cancelled
+                // Start again if cancelled
                 backgroundWorker1.RunWorkerAsync();
             else
             {
@@ -49,6 +69,39 @@ namespace Spandex
             }
         }
 
+
+        //private void searchBox_TextChanged(object sender, EventArgs e)
+        //{
+        //    if (backgroundWorker1.IsBusy)
+        //    {
+        //        backgroundWorker1.CancelAsync();
+
+        //    }
+        //    else
+        //        backgroundWorker1.RunWorkerAsync();
+        //}
+
+        //private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    lastneedle = searchBox.Text;
+        //    BackgroundWorker worker = (BackgroundWorker)sender;
+        //    displayed = valuepool.Where(s => !worker.CancellationPending && s.Contains(lastneedle, StringComparison.OrdinalIgnoreCase)).
+        //        Where(s => !worker.CancellationPending).Take(1000).ToList();
+        //}
+
+        //private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //{
+        //    if (lastneedle != searchBox.Text)
+        //        start again if cancelled
+        //        backgroundWorker1.RunWorkerAsync();
+        //    else
+        //    {
+        //        resultlist.DataSource = displayed;
+        //        selected = null;
+        //        resultlist.SelectedIndex = -1;
+        //    }
+        //}
+
         private void resultlist_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!backgroundWorker1.IsBusy && resultlist.SelectedIndex > -1)
@@ -57,6 +110,17 @@ namespace Spandex
                 selected = null;
 
             button1.Enabled = selected != null;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

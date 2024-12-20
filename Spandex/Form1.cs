@@ -1,8 +1,11 @@
 using Spiderman;
+using System;
 using System.Buffers.Binary;
 using System.Collections;
+using System.Drawing.Text;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace Spandex
 {
@@ -35,30 +38,11 @@ namespace Spandex
 
             this.Text = $"Spandex v{Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
             statusLabel.Image = global::Spandex.Properties.Resources.warning;
-            statusLabel.Text = "layout.csv not found, autocomplete is disabled";
+            statusLabel.Text = "layout.csv / hashes.txt weren't found, autocomplete is disabled";
 
-            if (File.Exists("layout.csv"))
-            {
-                texturelist = new HashSet<string>();
-                materialgraphlist = new HashSet<string>();
-                Regex r = new Regex(@"^[^,]+");
-                foreach (var line in File.ReadAllLines("layout.csv"))
-                {
-                    var m = r.Match(line);
-                    if (m.Value != "")
-                    {
-                        var s = m.Value.Replace("\"", "");
-                        var s2 = s.ToLower();
-                        if (s2.EndsWith(".texture"))
-                            texturelist.Add(s);
-                        else if (s2.EndsWith(".materialgraph"))
-                            materialgraphlist.Add(s);
-                    }
-                }
+            Styling.LunaToolboxStyle(this, Handle);
 
-                statusLabel.Image = global::Spandex.Properties.Resources.ok;
-                statusLabel.Text = "Loaded layout.csv";
-            }
+            LoadTextureStrings();
 
             if (Screen.PrimaryScreen.WorkingArea.Width > this.Width)
             {
@@ -68,12 +52,85 @@ namespace Spandex
             }
         }
 
+
         private void openbutton_Click(object sender, EventArgs e)
         {
             Open();
         }
 
         private byte[] originalBinary;
+
+        private bool resizedSplit = true;
+
+        private void LoadTextureStrings()
+        {
+            texturelist = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            materialgraphlist = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+            if (File.Exists("layout.csv"))
+            {
+                using (var reader = new StreamReader("layout.csv"))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        var commaIndex = line.IndexOf(',');
+                        if (commaIndex >= 0)
+                        {
+                            var s = line.Substring(0, commaIndex).Replace("\"", "").Trim();
+                            if (!string.IsNullOrEmpty(s))
+                            {
+                                if (s.EndsWith(".texture", StringComparison.OrdinalIgnoreCase))
+                                    texturelist.Add(s);
+                                else if (s.EndsWith(".materialgraph", StringComparison.OrdinalIgnoreCase))
+                                    materialgraphlist.Add(s);
+                            }
+                        }
+                    }
+                }
+
+                statusLabel.Image = Properties.Resources.ok;
+                statusLabel.Text = "Loaded layout.csv";
+                label1.Text = "Autocompleting with layout.csv";
+            }
+            else if (File.Exists("hashes.txt"))
+            {
+                using (var reader = new StreamReader("hashes.txt"))
+                {
+                    string line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        var fields = line.Split(',');
+                        if (fields.Length >= 2)
+                        {
+                            var texturePath = fields[1].Trim().Replace("\\", "/");
+
+                            if (texturePath.EndsWith(".texture", StringComparison.OrdinalIgnoreCase))
+                            {
+                                texturelist.Add(texturePath);
+                            }
+                            else if (texturePath.EndsWith(".materialgraph", StringComparison.OrdinalIgnoreCase))
+                            {
+                                materialgraphlist.Add(texturePath);
+                            }
+                        }
+                    }
+                }
+
+                statusLabel.Image = Properties.Resources.ok;
+                statusLabel.Text = "Loaded hashes.txt";
+                label1.Text = "Autocompleting with hashes.txt";
+            }
+            else
+            {
+                statusLabel.Image = Properties.Resources.warning;
+                statusLabel.Text = "No valid data found.";
+                label1.Text = "No layout.csv or hashes.txt found.";
+            }
+        }
+
+
+
 
         private void Open(string filename = "")
         {
@@ -104,7 +161,7 @@ namespace Spandex
                 // Detect magic number and set ComboBox selection
                 bool isMaterialGraph = Path.GetExtension(f.FileName).Equals(".materialgraph", StringComparison.OrdinalIgnoreCase);
 
-                    if (isMaterialGraph)
+                if (isMaterialGraph)
                 {
                     byte[] magicNumber = new byte[4];
                     Array.Copy(originalBinary, 0, magicNumber, 0, 4);
@@ -142,6 +199,22 @@ namespace Spandex
 
                 UseWaitCursor = false;
                 this.Text = $"{materials[0].assetfile} - Spandex v{Assembly.GetExecutingAssembly().GetName().Version.ToString(3)}";
+
+                // Okangel: set file path to new field
+                textBox_FileLoaded.Text = $"{materials[0].assetfile}";
+
+                if (resizedSplit)
+                {
+                    Size currentSize = splitContainer1.Size;
+
+                    splitContainer1.Size = new Size(currentSize.Width, currentSize.Height - 25);
+
+                    Point currentLocation = splitContainer1.Location;
+
+                    splitContainer1.Location = new Point(currentLocation.X, currentLocation.Y + 25);
+
+                    resizedSplit = false;
+                }
             }
 
             stringGrid.DataSource = textures.Values.
@@ -307,10 +380,32 @@ namespace Spandex
 
                     }
 
+                    //values.TryAdd((uint)c.ID, new GridEntry[vs.Count]);
+                    //var varray = values[(uint)c.ID];
+                    //for (int j = 0; j < vs.Count; j++)
+                    //{
+                    //    if (varray[j] == null)
+                    //    {
+                    //        varray[j] = new GridEntry();
+                    //        varray[j].Span = vs.Count > 1 ? j / (float)(vs.Count - 1) : null;
+                    //        varray[j].ID = (uint)c.ID;
+                    //    }
+
+                    //    varray[j].values[slotshader].Slot = i;
+                    //    varray[j].Type = type;
+                    //    varray[j].values[slotshader].Value = vs[j];
+                    //}
+
                     values.TryAdd((uint)c.ID, new GridEntry[vs.Count]);
                     var varray = values[(uint)c.ID];
+
                     for (int j = 0; j < vs.Count; j++)
                     {
+                        if (varray.Length <= j)
+                        {
+                            Array.Resize(ref varray, j + 1);
+                        }
+
                         if (varray[j] == null)
                         {
                             varray[j] = new GridEntry();
@@ -322,6 +417,7 @@ namespace Spandex
                         varray[j].Type = type;
                         varray[j].values[slotshader].Value = vs[j];
                     }
+
                 }
             }
 
@@ -361,8 +457,12 @@ namespace Spandex
                         // Replace the first 4 bytes with the magic number for Marvel's Spider-Man: Miles Morales (materialgraph)
                         magicNumber = new byte[] { 0x2A, 0x34, 0x60, 0xFF }; // Example values
                         break;
+                    //default:
+                    //throw new InvalidOperationException("Invalid option selected in ComboBox1");
                     default:
-                        throw new InvalidOperationException("Invalid option selected in ComboBox1");
+                        // Default to the magic number for Marvel's Spider-Man: Miles Morales (materialgraph)
+                        magicNumber = new byte[] { 0x5B, 0xDC, 0x1A, 0x1C };
+                        break;
                 }
             }
             else
@@ -378,8 +478,13 @@ namespace Spandex
                         // Replace the first 4 bytes with the magic number for Marvel's Spider-Man: Miles Morales (material)
                         magicNumber = new byte[] { 0x9C, 0x7E, 0x75, 0x18 };
                         break;
+                    //default:
+                    //throw new InvalidOperationException("Invalid option selected in ComboBox1");
                     default:
-                        throw new InvalidOperationException("Invalid option selected in ComboBox1");
+                        // Default to the magic number for Marvel's Spider-Man: Miles Morales (material)
+                        magicNumber = new byte[] { 0x68, 0x67, 0x6C, 0x4C };
+                        break;
+
                 }
             }
             return magicNumber;
@@ -572,9 +677,66 @@ namespace Spandex
                 statusLabel.Image = global::Spandex.Properties.Resources.ok;
                 statusLabel.Text = $"Saved material: {lastsavefile}";
                 UseWaitCursor = false;
-               
             }
+
+            // Do Universal Header
+            if (checkBox_UniversalHeader.Checked)
+            { UniversalHeaderOverride(); }
+            else { }
         }
+
+        private void UniversalHeaderOverride()
+        {
+            byte[] fileBytes = File.ReadAllBytes(lastsavefile);
+
+            string fileExtension = Path.GetExtension(lastsavefile).ToLower();
+
+            byte[] headerBytes = GetHeaderBytes(fileExtension, fileBytes);
+
+            if (headerBytes == null)
+            {
+                MessageBox.Show("Checked null");
+                return;
+            }
+
+            // Replace the start of the file with the new headerBytes
+            int overrideLength = Math.Min(headerBytes.Length, fileBytes.Length);
+            Array.Copy(headerBytes, 0, fileBytes, 0, overrideLength);
+
+            File.WriteAllBytes(lastsavefile, fileBytes);
+        }
+
+        private static byte[] GetHeaderBytes(string fileExtension, byte[] fileBytes)
+        {
+            // Skip 36 bytes more because of the default header
+            byte[] sizeBytes = fileBytes.Skip(8 + 36).Take(3).ToArray();
+
+            // We just need .materialgraph and .nodegraph for Spandex
+            var headerDictionary = new Dictionary<string, (byte[] header, byte[] additionalBytes)>
+    {
+        {
+            ".materialgraph", (
+                new byte[] { 0x5B, 0xDC, 0x1A, 0x1C, 0x00, 0x01, 0x00, 0x00 },
+                new byte[] { 0x40, 0x71, 0x55, 0x00, 0x10, 0x0C, 0x53, 0x77, 0xBA, 0x00, 0x04, 0x10, 0x00, 0x40, 0x10, 0x00, 0x80, 0x45, 0x0D, 0x00, 0x10, 0x4C, 0x51, 0x00, 0x80 }
+            )
+        },
+        {
+            ".material", (
+                new byte[] { 0x68, 0x67, 0x6C, 0x4C, 0x00, 0x01, 0x00, 0x00 },
+                new byte[] { 0x80, 0x7F, 0x00, 0x00, 0x10, 0x6A, 0xF6, 0xB1, 0x28, 0x00, 0x02, 0x00, 0x00, 0x40, 0x04, 0x00, 0x00, 0xC9, 0x09, 0x00, 0x10, 0x00, 0x37, 0x00, 0x00 }
+            )
+        }
+    };
+
+            if (headerDictionary.ContainsKey(fileExtension))
+            {
+                var (header, additionalBytes) = headerDictionary[fileExtension];
+                return header.Concat(sizeBytes).Concat(additionalBytes).ToArray();
+            }
+
+            return null;
+        }
+
 
         private void folderButton_Click(object sender, EventArgs e)
         {
@@ -647,7 +809,7 @@ namespace Spandex
 
         private void stringGrid_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            if (texturelist != null && (e.ColumnIndex == 1 || e.ColumnIndex == 2))
+            if (texturelist != null && (e.ColumnIndex == 1 || e.ColumnIndex == 2) && checkBox_Autocompletion.Checked)
             {
                 var form2 = new Form2(stringGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string,
                     stringGrid.CurrentCell.RowIndex == 0 ? materialgraphlist : texturelist);
@@ -660,6 +822,7 @@ namespace Spandex
         {
             valueGrid.Columns[2].Visible = materials[0]?.GetSectionHeader(Material.SectionType.COMPILEDSHADERS) != null;
             valueGrid.Columns[3].Visible = valueGrid.Columns[4].Visible = materials[0]?.GetSectionHeader(Material.SectionType.SHADEROVERRIDES) != null;
+
             removeUndefFloats.Enabled = removeUndefInts.Enabled = valueGrid.Columns[3].Visible;
 
             foreach (DataGridViewRow row in valueGrid.Rows)
@@ -741,6 +904,10 @@ namespace Spandex
 
         }
 
+        private void checkBox_Autocompletion_CheckedChanged(object sender, EventArgs e)
+        {
+            label1.Visible = checkBox_Autocompletion.Checked;
+        }
     }
 
     public class GridEntry

@@ -23,8 +23,16 @@ namespace Spiderman
                     SectionType.RC_MATERIALFILE,
                     SectionType.RC_MATERIALTEMPLATE,
                 };
-            if (!a.Contains(ps4header.type))
-                throw new Exception("Not a material or material template file");
+
+            // Okangel: new SM2 materials' headers vary a lot, disabling this is a workaround for the file to load.
+
+            // Other solution is changing *where* the MaterialFile is read from, so instead of the beginning of the
+            // file, do it at 0x28.
+
+            // I ain't doing it though lol
+
+            //if (!a.Contains(ps4header.type))
+            //throw new Exception("Not a material or material template file");
         }
 
         public enum SectionType : uint
@@ -244,7 +252,7 @@ namespace Spiderman
                 }
 
                 byte[] newintdata = new byte[Ints.Count * 8];
-                for(int i = 0; i < Ints.Count; i++)
+                for (int i = 0; i < Ints.Count; i++)
                 {
                     BitConverter.GetBytes((uint)Ints[i]).CopyTo(newintdata, i * 8);
                     BitConverter.GetBytes((uint)Ints.Cast<DictionaryEntry>().ElementAt(i).Key).CopyTo(newintdata, i * 8 + 4);
@@ -253,21 +261,21 @@ namespace Spiderman
 
                 byte[] newfloatoffsetdata = new byte[Floats.Count * 8];
                 var newfloatdataarray = Floats.Cast<DictionaryEntry>().Select(kv =>
+                {
+                    switch (kv.Value)
                     {
-                        switch (kv.Value)
-                        {
-                            case float[]:
-                                return ((float[])kv.Value).ToList().Select(f => BitConverter.GetBytes(f).ToList()).SelectMany(f => f);
-                                break;
-                            case ushort[]:
-                                return ((ushort[])kv.Value).ToList().Select(u => BitConverter.GetBytes(u).ToList()).SelectMany(u => u);
-                                break;
-                            case byte[]:
-                                return (byte[])kv.Value;
-                            default:
-                                throw new Exception("Float value must be float[], ushort[], or byte[]");
-                        }
-                    }).ToArray();
+                        case float[]:
+                            return ((float[])kv.Value).ToList().Select(f => BitConverter.GetBytes(f).ToList()).SelectMany(f => f);
+                            break;
+                        case ushort[]:
+                            return ((ushort[])kv.Value).ToList().Select(u => BitConverter.GetBytes(u).ToList()).SelectMany(u => u);
+                            break;
+                        case byte[]:
+                            return (byte[])kv.Value;
+                        default:
+                            throw new Exception("Float value must be float[], ushort[], or byte[]");
+                    }
+                }).ToArray();
 
                 byte[] newfloatdata = newfloatdataarray.SelectMany(f => f).ToArray();
                 ushort soff = 0;
@@ -466,11 +474,11 @@ namespace Spiderman
                 vertex = new List<byte[]>();
                 fragment = new List<byte[]>();
 
-                for (int i = 0; i < data.Length; )
+                for (int i = 0; i < data.Length;)
                 {
-                    for ( ; i % 0x40 != 0; i++) ;
+                    for (; i % 0x40 != 0; i++) ;
                     // IGSH signature
-                    if (i + 4 + 4 > data.Length) 
+                    if (i + 4 + 4 > data.Length)
                         break;
                     if ((BitConverter.ToUInt32(data, i) != 0x48534749))
                     {

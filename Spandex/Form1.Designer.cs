@@ -77,39 +77,42 @@
             valueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             templateValueDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             valueGridBindingSource = new BindingSource(components);
-            tableLayoutPanel1 = new TableLayoutPanel();
-            panel2 = new Panel();
-            label2 = new Label();
             panel1 = new Panel();
+            checkBox_Autocompletion = new CheckBox();
+            label2 = new Label();
+            label1 = new Label();
+            checkBox_UniversalHeader = new CheckBox();
+            textBox_FileLoaded = new TextBox();
             button1 = new Button();
             comboBox1 = new ComboBox();
             removeUndefInts = new CheckBox();
             removeUndefFloats = new CheckBox();
             removeUndefTextures = new CheckBox();
-            panel3 = new Panel();
-            label3 = new Label();
             statusStrip1 = new StatusStrip();
             toolStripStatusLabel1 = new ToolStripStatusLabel();
             statusLabel = new ToolStripStatusLabel();
+            splitContainer1 = new SplitContainer();
             ((System.ComponentModel.ISupportInitialize)stringGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)stringGridEntryBindingSource).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)valueGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)valueGridBindingSource).BeginInit();
-            tableLayoutPanel1.SuspendLayout();
-            panel2.SuspendLayout();
             panel1.SuspendLayout();
-            panel3.SuspendLayout();
             statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
             SuspendLayout();
             // 
             // openbutton
             // 
+            openbutton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             openbutton.BackColor = Color.FromArgb(64, 64, 64);
             openbutton.FlatAppearance.BorderColor = SystemColors.ActiveCaptionText;
             openbutton.FlatStyle = FlatStyle.Flat;
             openbutton.ForeColor = Color.White;
-            openbutton.Location = new Point(9, 8);
+            openbutton.Location = new Point(867, 2);
             openbutton.Margin = new Padding(2);
             openbutton.Name = "openbutton";
             openbutton.Size = new Size(126, 24);
@@ -120,12 +123,13 @@
             // 
             // savebutton
             // 
+            savebutton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             savebutton.BackColor = Color.FromArgb(64, 64, 64);
             savebutton.Enabled = false;
             savebutton.FlatAppearance.BorderColor = Color.Black;
             savebutton.FlatStyle = FlatStyle.Flat;
             savebutton.ForeColor = SystemColors.Control;
-            savebutton.Location = new Point(9, 44);
+            savebutton.Location = new Point(997, 3);
             savebutton.Margin = new Padding(2);
             savebutton.Name = "savebutton";
             savebutton.Size = new Size(126, 24);
@@ -140,9 +144,8 @@
             stringGrid.AllowUserToDeleteRows = false;
             stringGrid.AllowUserToOrderColumns = true;
             stringGrid.AllowUserToResizeRows = false;
-            stringGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             stringGrid.AutoGenerateColumns = false;
-            stringGrid.BackgroundColor = Color.FromArgb(21, 21, 21);
+            stringGrid.BackgroundColor = Color.FromArgb(17, 17, 17);
             stringGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = Color.FromArgb(64, 64, 64);
@@ -163,9 +166,10 @@
             dataGridViewCellStyle13.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle13.WrapMode = DataGridViewTriState.False;
             stringGrid.DefaultCellStyle = dataGridViewCellStyle13;
+            stringGrid.Dock = DockStyle.Fill;
             stringGrid.EnableHeadersVisualStyles = false;
             stringGrid.GridColor = SystemColors.ActiveCaptionText;
-            stringGrid.Location = new Point(8, 20);
+            stringGrid.Location = new Point(0, 0);
             stringGrid.Margin = new Padding(9, 8, 9, 8);
             stringGrid.MinimumSize = new Size(636, 119);
             stringGrid.Name = "stringGrid";
@@ -185,7 +189,7 @@
             stringGrid.RowTemplate.DefaultCellStyle.BackColor = Color.FromArgb(64, 64, 64);
             stringGrid.RowTemplate.DefaultCellStyle.ForeColor = Color.White;
             stringGrid.RowTemplate.Height = 37;
-            stringGrid.Size = new Size(1198, 230);
+            stringGrid.Size = new Size(1121, 334);
             stringGrid.TabIndex = 1;
             stringGrid.CellBeginEdit += stringGrid_CellBeginEdit;
             stringGrid.CellContentClick += stringGrid_CellContentClick;
@@ -321,9 +325,8 @@
             valueGrid.AllowUserToAddRows = false;
             valueGrid.AllowUserToDeleteRows = false;
             valueGrid.AllowUserToResizeRows = false;
-            valueGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             valueGrid.AutoGenerateColumns = false;
-            valueGrid.BackgroundColor = Color.FromArgb(21, 21, 21);
+            valueGrid.BackgroundColor = Color.FromArgb(17, 17, 17);
             valueGrid.BorderStyle = BorderStyle.None;
             valueGrid.CellBorderStyle = DataGridViewCellBorderStyle.SingleVertical;
             valueGrid.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
@@ -346,9 +349,10 @@
             dataGridViewCellStyle22.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle22.WrapMode = DataGridViewTriState.False;
             valueGrid.DefaultCellStyle = dataGridViewCellStyle22;
+            valueGrid.Dock = DockStyle.Fill;
             valueGrid.EnableHeadersVisualStyles = false;
             valueGrid.GridColor = SystemColors.ActiveCaptionText;
-            valueGrid.Location = new Point(9, 24);
+            valueGrid.Location = new Point(0, 0);
             valueGrid.Margin = new Padding(9, 8, 9, 8);
             valueGrid.MinimumSize = new Size(338, 116);
             valueGrid.Name = "valueGrid";
@@ -368,7 +372,7 @@
             valueGrid.RowTemplate.DefaultCellStyle.BackColor = Color.FromArgb(64, 64, 64);
             valueGrid.RowTemplate.DefaultCellStyle.ForeColor = Color.White;
             valueGrid.RowTemplate.Height = 37;
-            valueGrid.Size = new Size(911, 225);
+            valueGrid.Size = new Size(1121, 370);
             valueGrid.TabIndex = 3;
             valueGrid.CellPainting += valueGrid_CellPainting;
             valueGrid.DataBindingComplete += valueGrid_DataBindingComplete;
@@ -440,54 +444,16 @@
             // 
             valueGridBindingSource.DataSource = typeof(GridEntry);
             // 
-            // tableLayoutPanel1
-            // 
-            tableLayoutPanel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            tableLayoutPanel1.ColumnCount = 2;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutPanel1.Controls.Add(panel2, 1, 0);
-            tableLayoutPanel1.Controls.Add(panel1, 0, 0);
-            tableLayoutPanel1.Controls.Add(panel3);
-            tableLayoutPanel1.Location = new Point(7, 6);
-            tableLayoutPanel1.Margin = new Padding(2);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 2;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(1223, 531);
-            tableLayoutPanel1.TabIndex = 4;
-            // 
-            // panel2
-            // 
-            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel2.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(label2);
-            panel2.Controls.Add(valueGrid);
-            panel2.Location = new Point(290, 2);
-            panel2.Margin = new Padding(2);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(931, 261);
-            panel2.TabIndex = 2;
-            // 
-            // label2
-            // 
-            label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(413, 0);
-            label2.Margin = new Padding(2, 0, 2, 0);
-            label2.Name = "label2";
-            label2.Size = new Size(110, 19);
-            label2.TabIndex = 4;
-            label2.Text = "Numeric inputs";
-            // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             panel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panel1.BackColor = Color.FromArgb(12, 12, 12);
+            panel1.Controls.Add(checkBox_Autocompletion);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(label1);
+            panel1.Controls.Add(checkBox_UniversalHeader);
+            panel1.Controls.Add(textBox_FileLoaded);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(comboBox1);
             panel1.Controls.Add(removeUndefInts);
@@ -495,12 +461,73 @@
             panel1.Controls.Add(removeUndefTextures);
             panel1.Controls.Add(openbutton);
             panel1.Controls.Add(savebutton);
-            panel1.Location = new Point(2, 2);
+            panel1.Location = new Point(11, 11);
             panel1.Margin = new Padding(2);
-            panel1.MinimumSize = new Size(284, 150);
             panel1.Name = "panel1";
-            panel1.Size = new Size(284, 261);
+            panel1.Size = new Size(1125, 59);
             panel1.TabIndex = 4;
+            // 
+            // checkBox_Autocompletion
+            // 
+            checkBox_Autocompletion.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            checkBox_Autocompletion.AutoSize = true;
+            checkBox_Autocompletion.ForeColor = SystemColors.ActiveBorder;
+            checkBox_Autocompletion.Location = new Point(867, 31);
+            checkBox_Autocompletion.Margin = new Padding(2);
+            checkBox_Autocompletion.Name = "checkBox_Autocompletion";
+            checkBox_Autocompletion.Size = new Size(133, 19);
+            checkBox_Autocompletion.TabIndex = 10;
+            checkBox_Autocompletion.Text = "Autocomplete fields";
+            checkBox_Autocompletion.UseVisualStyleBackColor = true;
+            checkBox_Autocompletion.CheckedChanged += checkBox_Autocompletion_CheckedChanged;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.ForeColor = Color.FromArgb(210, 210, 210);
+            label2.Location = new Point(511, 32);
+            label2.Name = "label2";
+            label2.Size = new Size(141, 15);
+            label2.TabIndex = 9;
+            label2.Text = "Remove undefined (Red):";
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.ForeColor = Color.FromArgb(120, 120, 120);
+            label1.Location = new Point(-2, 34);
+            label1.Name = "label1";
+            label1.Size = new Size(73, 15);
+            label1.TabIndex = 8;
+            label1.Text = "120, 120, 120";
+            label1.Visible = false;
+            // 
+            // checkBox_UniversalHeader
+            // 
+            checkBox_UniversalHeader.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            checkBox_UniversalHeader.AutoSize = true;
+            checkBox_UniversalHeader.ForeColor = SystemColors.ActiveBorder;
+            checkBox_UniversalHeader.Location = new Point(1008, 31);
+            checkBox_UniversalHeader.Margin = new Padding(2);
+            checkBox_UniversalHeader.Name = "checkBox_UniversalHeader";
+            checkBox_UniversalHeader.Size = new Size(115, 19);
+            checkBox_UniversalHeader.TabIndex = 7;
+            checkBox_UniversalHeader.Text = "Universal Header";
+            checkBox_UniversalHeader.UseVisualStyleBackColor = true;
+            // 
+            // textBox_FileLoaded
+            // 
+            textBox_FileLoaded.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            textBox_FileLoaded.BackColor = Color.FromArgb(22, 22, 22);
+            textBox_FileLoaded.BorderStyle = BorderStyle.FixedSingle;
+            textBox_FileLoaded.ForeColor = Color.FromArgb(120, 120, 120);
+            textBox_FileLoaded.Location = new Point(1, 3);
+            textBox_FileLoaded.Name = "textBox_FileLoaded";
+            textBox_FileLoaded.ReadOnly = true;
+            textBox_FileLoaded.Size = new Size(861, 23);
+            textBox_FileLoaded.TabIndex = 6;
+            textBox_FileLoaded.Text = "Load a material first...";
             // 
             // button1
             // 
@@ -529,72 +556,52 @@
             // 
             // removeUndefInts
             // 
+            removeUndefInts.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             removeUndefInts.AutoSize = true;
-            removeUndefInts.Location = new Point(10, 122);
+            removeUndefInts.ForeColor = SystemColors.ActiveBorder;
+            removeUndefInts.Location = new Point(791, 31);
             removeUndefInts.Margin = new Padding(2);
             removeUndefInts.Name = "removeUndefInts";
-            removeUndefInts.Size = new Size(245, 19);
+            removeUndefInts.Size = new Size(68, 19);
             removeUndefInts.TabIndex = 3;
-            removeUndefInts.Text = "Remove undefined (red) integer overrides";
+            removeUndefInts.Text = "Integers";
             removeUndefInts.UseVisualStyleBackColor = true;
             // 
             // removeUndefFloats
             // 
+            removeUndefFloats.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             removeUndefFloats.AutoSize = true;
-            removeUndefFloats.Location = new Point(10, 102);
+            removeUndefFloats.ForeColor = SystemColors.ActiveBorder;
+            removeUndefFloats.Location = new Point(730, 31);
             removeUndefFloats.Margin = new Padding(2);
             removeUndefFloats.Name = "removeUndefFloats";
-            removeUndefFloats.Size = new Size(232, 19);
+            removeUndefFloats.Size = new Size(57, 19);
             removeUndefFloats.TabIndex = 3;
-            removeUndefFloats.Text = "Remove undefined (red) float overrides";
+            removeUndefFloats.Text = "Floats";
             removeUndefFloats.UseVisualStyleBackColor = true;
             // 
             // removeUndefTextures
             // 
+            removeUndefTextures.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             removeUndefTextures.AutoSize = true;
-            removeUndefTextures.Location = new Point(10, 82);
+            removeUndefTextures.ForeColor = SystemColors.ActiveBorder;
+            removeUndefTextures.Location = new Point(657, 31);
             removeUndefTextures.Margin = new Padding(2);
             removeUndefTextures.Name = "removeUndefTextures";
-            removeUndefTextures.Size = new Size(245, 19);
+            removeUndefTextures.Size = new Size(69, 19);
             removeUndefTextures.TabIndex = 3;
-            removeUndefTextures.Text = "Remove undefined (red) texture overrides";
+            removeUndefTextures.Text = "Textures";
             removeUndefTextures.UseVisualStyleBackColor = true;
-            // 
-            // panel3
-            // 
-            panel3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            panel3.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            panel3.BorderStyle = BorderStyle.FixedSingle;
-            tableLayoutPanel1.SetColumnSpan(panel3, 2);
-            panel3.Controls.Add(label3);
-            panel3.Controls.Add(stringGrid);
-            panel3.Location = new Point(2, 267);
-            panel3.Margin = new Padding(2);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(1219, 262);
-            panel3.TabIndex = 0;
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(548, 0);
-            label3.Margin = new Padding(2, 0, 2, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(103, 19);
-            label3.TabIndex = 4;
-            label3.Text = "Texture inputs";
             // 
             // statusStrip1
             // 
             statusStrip1.BackColor = Color.FromArgb(20, 20, 20);
             statusStrip1.ImageScalingSize = new Size(28, 28);
             statusStrip1.Items.AddRange(new ToolStripItem[] { toolStripStatusLabel1, statusLabel });
-            statusStrip1.Location = new Point(0, 532);
+            statusStrip1.Location = new Point(0, 753);
             statusStrip1.Name = "statusStrip1";
             statusStrip1.Padding = new Padding(1, 0, 8, 0);
-            statusStrip1.Size = new Size(1242, 37);
+            statusStrip1.Size = new Size(1148, 37);
             statusStrip1.TabIndex = 5;
             statusStrip1.Text = "statusStrip1";
             // 
@@ -612,36 +619,54 @@
             statusLabel.Padding = new Padding(10, 0, 0, 0);
             statusLabel.Size = new Size(38, 28);
             // 
+            // splitContainer1
+            // 
+            splitContainer1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            splitContainer1.Location = new Point(12, 42);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Orientation = Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(valueGrid);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(stringGrid);
+            splitContainer1.Size = new Size(1121, 708);
+            splitContainer1.SplitterDistance = 370;
+            splitContainer1.TabIndex = 6;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BackColor = Color.FromArgb(35, 35, 35);
-            ClientSize = new Size(1242, 569);
+            BackColor = Color.FromArgb(12, 12, 12);
+            ClientSize = new Size(1148, 790);
+            Controls.Add(splitContainer1);
+            Controls.Add(panel1);
             Controls.Add(statusStrip1);
-            Controls.Add(tableLayoutPanel1);
             ForeColor = SystemColors.Control;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(2);
             MinimumSize = new Size(701, 389);
             Name = "Form1";
-            Text = "Spandex";
+            Text = "Spandex Luna";
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)stringGrid).EndInit();
             ((System.ComponentModel.ISupportInitialize)stringGridEntryBindingSource).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSource2).EndInit();
             ((System.ComponentModel.ISupportInitialize)valueGrid).EndInit();
             ((System.ComponentModel.ISupportInitialize)valueGridBindingSource).EndInit();
-            tableLayoutPanel1.ResumeLayout(false);
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             statusStrip1.ResumeLayout(false);
             statusStrip1.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -660,15 +685,10 @@
         private DataGridView valueGrid;
         private BindingSource valueGridBindingSource;
         private DataGridViewTextBoxColumn templateTypeDataGridViewTextBoxColumn;
-        private TableLayoutPanel tableLayoutPanel1;
         private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
         private CheckBox removeUndefInts;
         private CheckBox removeUndefFloats;
         private CheckBox removeUndefTextures;
-        private Label label2;
-        private Label label3;
         private StatusStrip statusStrip1;
         private ToolStripStatusLabel toolStripStatusLabel1;
         private ToolStripStatusLabel statusLabel;
@@ -690,5 +710,11 @@
         private DataGridViewTextBoxColumn templateValueDataGridViewTextBoxColumn1;
         private ComboBox comboBox1;
         private Button button1;
+        private SplitContainer splitContainer1;
+        private TextBox textBox_FileLoaded;
+        private CheckBox checkBox_UniversalHeader;
+        private Label label1;
+        private Label label2;
+        private CheckBox checkBox_Autocompletion;
     }
 }

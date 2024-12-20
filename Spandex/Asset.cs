@@ -204,16 +204,38 @@ namespace Spiderman
                             throw new Exception();
                     }
 
+                    //if (section.newdata is not null)
+                    //{
+                    //    w.BaseStream.Seek(h.offset + PS4Header.length, SeekOrigin.Begin);
+                    //    w.Write(section.newdata);
+                    //    while (w.BaseStream.Position % 16 != 4)
+                    //        w.Write((byte)0);
+                    //    if (i + 1 < sectionlayout.Count)
+                    //    {
+                    //        uint padding = ((SectionHeader)sectionlayout[i + 1]).offset + PS4Header.length - (uint)w.BaseStream.Position;
+                    //        w.Write(new byte[padding]);
+                    //    }
+                    //}
+
+                    // Okangel: Do this to fix SM2 materials
+
                     if (section.newdata is not null)
                     {
                         w.BaseStream.Seek(h.offset + PS4Header.length, SeekOrigin.Begin);
                         w.Write(section.newdata);
                         while (w.BaseStream.Position % 16 != 4)
                             w.Write((byte)0);
+
                         if (i + 1 < sectionlayout.Count)
                         {
-                            uint padding = ((SectionHeader)sectionlayout[i + 1]).offset + PS4Header.length - (uint)w.BaseStream.Position;
-                            w.Write(new byte[padding]);
+                            uint nextOffset = ((SectionHeader)sectionlayout[i + 1]).offset + PS4Header.length;
+                            long position = w.BaseStream.Position;
+
+                            if (nextOffset > position)
+                            {
+                                uint padding = (uint)(nextOffset - position);
+                                w.Write(new byte[padding]);
+                            }
                         }
                     }
                 }

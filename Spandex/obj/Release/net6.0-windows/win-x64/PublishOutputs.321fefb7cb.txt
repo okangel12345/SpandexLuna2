@@ -1,0 +1,2 @@
+D:\Luna_Launcher\LunaLauncheri300\SpideyTextureScaler\LunaSpandex\Spandex\bin\Release\net6.0-windows\publish\win-x64\Spandex.pdb
+D:\Luna_Launcher\LunaLauncheri300\SpideyTextureScaler\LunaSpandex\Spandex\bin\Release\net6.0-windows\publish\win-x64\Spandex.exe
