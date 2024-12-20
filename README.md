@@ -18,6 +18,8 @@ Updated with new IDs, support for all materials (RCRA, MSMR, MSMM & MSM2), enhan
 - Split container for string and numeric inputs.
 - Over 14,000 of Spider-Man's IDs.
 
+![](https://raw.githubusercontent.com/okangel12345/SpandexLuna/refs/heads/master/Screenshot.png)
+
 # Usage
 Click "Load File" to start loading the file. If everything goes through correctly you should see the material's numeric and string inputs on the top and bottom panels.
 You can resize these panels by positioning your cursor very slightly above the bottom panel.
