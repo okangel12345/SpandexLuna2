@@ -7,7 +7,7 @@ Material file editor for Marvel's Spider-Man Remastered, Marvel's Spider-Man Mil
 Updated with new IDs, support for all materials (RCRA, MSMR, MSMM & MSM2), enhanced modern dark theme.
 
 - Originally developed by hypermorphicmods, Nexus Mod Page: [Nexus Mods](https://www.nexusmods.com/marvelsspidermanremastered/mods/4395?tab=files)
-- Modified by Blake Young.
+- Also modified by Blake Young.
 
 
 # New features
